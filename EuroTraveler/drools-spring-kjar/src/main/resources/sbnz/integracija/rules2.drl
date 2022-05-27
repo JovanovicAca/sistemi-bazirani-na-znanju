@@ -1,6 +1,6 @@
-package sbnz.integracija;
+package com.example.EuroTraveler;
 
-import sbnz.integracija.example.facts.Item;
+import com.example.EuroTraveler.facts.Item;
 
 rule "Classify Item - High Range"
     when

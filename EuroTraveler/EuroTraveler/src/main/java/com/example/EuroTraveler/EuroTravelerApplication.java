@@ -13,7 +13,7 @@ import java.util.Arrays;
 
 @SpringBootApplication
 public class EuroTravelerApplication {
-	private static Logger log = LoggerFactory.getLogger(EuroTravelerApplication.class);
+	//private static Logger log = LoggerFactory.getLogger(EuroTravelerApplication.class);
 	public static void main(String[] args) {
 		ApplicationContext ctx = SpringApplication.run(EuroTravelerApplication.class, args);
 
@@ -27,11 +27,11 @@ public class EuroTravelerApplication {
 		//log.info(sb.toString());
 	}
 
-//	@Bean
+	@Bean
 	public KieContainer kieContainer() {
 		KieServices ks = KieServices.Factory.get();
 		KieContainer kContainer = ks
-				.newKieContainer(ks.newReleaseId("org.springframework.boot", "drools-spring-kjar", "0.0.1-SNAPSHOT"));
+				.newKieContainer(ks.newReleaseId("sbnz", "drools-spring-kjar", "0.0.1-SNAPSHOT"));
 		KieScanner kScanner = ks.newKieScanner(kContainer);
 		kScanner.start(10_000);
 		return kContainer;
