@@ -1,21 +1,28 @@
 package com.example.EuroTraveler.facts;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
+@Table(name = "item")
 public class Item implements Serializable {
-
-
-    private static final long serialVersionUID = 1L;
-    public enum Category {
-
-        NA, LOW_RANGE, MID_RANGE, HIGH_RANGE,
-        SPECIAL_MIDHIGH_RANGE //used in chapter 4
-
-    }
+   private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
+    @Column(name = "id")
     private Long id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "cost")
     private Double cost;
+
+    @Column(name = "salePrice")
     private Double salePrice;
+
+    @Column(name = "category")
     private Category category;
 
     public Item() {
