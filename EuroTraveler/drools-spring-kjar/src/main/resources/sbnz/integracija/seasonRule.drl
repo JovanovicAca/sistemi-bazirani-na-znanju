@@ -1,0 +1,34 @@
+package com.example.EuroTraveler;
+import com.example.EuroTraveler.facts.Enums.*;
+import com.example.EuroTraveler.facts.Query;
+import com.example.EuroTraveler.facts.DTO.ResultDTO;
+
+rule "Hot Season"
+    no-loop true
+    when
+        $query: Query( periodFrom.getMonth() in (6,7,8) )
+    then
+        modify($result){
+            setWeather(Weather.HOT)}
+            update($result)
+end
+
+rule "Cold Season"
+    no-loop true
+    when
+        $query: Query( periodFrom.getMonth() in (11,12,1,2) )
+    then
+        modify($result){
+            setWeather(Weather.HOT)}
+            update($result)
+end
+
+rule "Mild Season"
+    no-loop true
+    when
+        $query: Query( periodFrom.getMonth() in (3,4,5,9,10,11) )
+    then
+        modify($result){
+            setWeather(Weather.HOT)}
+            update($result)
+end

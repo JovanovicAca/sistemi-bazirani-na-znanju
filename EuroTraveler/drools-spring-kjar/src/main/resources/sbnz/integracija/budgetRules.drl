@@ -1,0 +1,37 @@
+package com.example.EuroTraveler;
+import com.example.EuroTraveler.facts.Enums.Budget;
+import com.example.EuroTraveler.facts.Query;
+import com.example.EuroTraveler.facts.DTO.ResultDTO;
+
+rule "Low Budget Trip"
+    when
+    	$result : ResultDTO ( budget == null)
+        $query: Query( budget/numberOfPassengers <= 300)
+    then
+        modify($result){
+            setBudget(Budget.LOW)}
+            update($result)
+        System.out.println("*RULE FIRED* Trip budget set to LOW");
+end
+
+rule "Medium Budget Trip"
+    when
+    	$result : ResultDTO ( budget == null)
+        $query: Query( budget/numberOfPassengers <= 800 && budget/numberOfPassengers > 300)
+    then
+        modify($result){
+            setBudget(Budget.MEDIUM)}
+            update($result)
+        System.out.println("*RULE FIRED* Trip budget set to MEDIUM");
+end
+
+rule "High Budget Trip"
+    when
+    	$result : ResultDTO ( budget == null)
+        $query: Query( budget/numberOfPassengers > 800)
+    then
+        modify($result){
+            setBudget(Budget.HIGH)}
+            update($result)
+        System.out.println("*RULE FIRED* Trip budget set to HIGH");
+end

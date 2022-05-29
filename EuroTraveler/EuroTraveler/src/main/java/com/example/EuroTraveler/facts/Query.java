@@ -2,6 +2,8 @@ package com.example.EuroTraveler.facts;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
@@ -24,14 +26,20 @@ public class Query implements Serializable {
     @Column(name = "average_age")
     private Double averageAge;
 
+    @Column(name = "numberOfPassengers")
+    private Integer numberOfPassengers;
+
     @Column(name = "budget")
     private Double budget;
 
     @Column(name = "maximum_distance")
     private Double maximumDistance;
 
-    @Column(name = "summer_vacation")
-    private Boolean summerVacation;
+    @Column(name = "periodFrom")
+    private LocalDate periodFrom;
+
+    @Column(name = "periodTo")
+    private LocalDate periodTo;
 
     @OneToMany(mappedBy = "query")
     @JsonIgnoreProperties(value = { "query" }, allowSetters = true)
@@ -46,6 +54,15 @@ public class Query implements Serializable {
     private Set<TransportType> transportTypes = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
+
+
+    public Integer getNumberOfPassengers() {
+        return numberOfPassengers;
+    }
+
+    public void setNumberOfPassengers(Integer numberOfPassengers) {
+        this.numberOfPassengers = numberOfPassengers;
+    }
 
     public Long getId() {
         return this.id;
@@ -99,17 +116,20 @@ public class Query implements Serializable {
         this.maximumDistance = maximumDistance;
     }
 
-    public Boolean getSummerVacation() {
-        return this.summerVacation;
+    public LocalDate getPeriodFrom() {
+        return periodFrom;
     }
 
-    public Query summerVacation(Boolean summerVacation) {
-        this.setSummerVacation(summerVacation);
-        return this;
+    public void setPeriodFrom(LocalDate periodFrom) {
+        this.periodFrom = periodFrom;
     }
 
-    public void setSummerVacation(Boolean summerVacation) {
-        this.summerVacation = summerVacation;
+    public LocalDate getPeriodTo() {
+        return periodTo;
+    }
+
+    public void setPeriodTo(LocalDate periodTo) {
+        this.periodTo = periodTo;
     }
 
     public Set<Interests> getInterests() {
@@ -232,7 +252,6 @@ public class Query implements Serializable {
                 ", averageAge=" + getAverageAge() +
                 ", budget=" + getBudget() +
                 ", maximumDistance=" + getMaximumDistance() +
-                ", summerVacation='" + getSummerVacation() + "'" +
                 "}";
     }
 }
