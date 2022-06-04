@@ -6,4 +6,5 @@ public enum Distance {
     MEDIUM,
     MEDIUM_LONG,
     LONG,
+    VERY_LONG
 }

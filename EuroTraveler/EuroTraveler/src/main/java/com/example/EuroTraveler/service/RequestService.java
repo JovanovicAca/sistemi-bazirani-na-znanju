@@ -1,9 +1,8 @@
 package com.example.EuroTraveler.service;
 
 import com.example.EuroTraveler.SampleAppService;
-import com.example.EuroTraveler.facts.DTO.ResultDTO;
-import com.example.EuroTraveler.facts.Item;
-import com.example.EuroTraveler.facts.Query;
+import com.example.EuroTraveler.facts.Request;
+import com.example.EuroTraveler.facts.Response;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.slf4j.Logger;
@@ -12,23 +11,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-
-public class QueryService {
+public class RequestService {
 
     private static Logger log = LoggerFactory.getLogger(SampleAppService.class);
 
     private final KieContainer kieContainer;
 
     @Autowired
-    public QueryService(KieContainer kieContainer) {
+    public RequestService(KieContainer kieContainer) {
         this.kieContainer = kieContainer;
     }
 
-    public ResultDTO getDrools(ResultDTO result, Query query) {
+    public Response getDrools(Request req, Response res) {
         KieSession kieSession = kieContainer.newKieSession();
-        kieSession.insert(query);
+        kieSession.insert(req);
         kieSession.fireAllRules();
         kieSession.dispose();
-        return result;
+        return res;
     }
 }

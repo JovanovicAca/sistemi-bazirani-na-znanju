@@ -2,6 +2,9 @@ package com.example.EuroTraveler.facts.Enums;
 
 public enum Budget {
     LOW,
+    LOW_MEDIUM,
     MEDIUM,
-    HIGH
+    MEDIUM_HIGH,
+    HIGH,
+    LUXURY
 }
