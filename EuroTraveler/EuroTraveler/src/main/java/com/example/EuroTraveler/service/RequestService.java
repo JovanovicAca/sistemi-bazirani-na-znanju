@@ -1,6 +1,5 @@
 package com.example.EuroTraveler.service;
 
-import com.example.EuroTraveler.SampleAppService;
 import com.example.EuroTraveler.facts.Request;
 import com.example.EuroTraveler.facts.Response;
 import org.kie.api.runtime.KieContainer;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class RequestService {
 
-    private static Logger log = LoggerFactory.getLogger(SampleAppService.class);
+    private static Logger log = LoggerFactory.getLogger(RequestService.class);
 
     private final KieContainer kieContainer;
 
@@ -22,11 +21,16 @@ public class RequestService {
         this.kieContainer = kieContainer;
     }
 
-    public Response getDrools(Request req, Response res) {
+    public Response getDrools(Request req) {
+        Response res = new Response();
+
         KieSession kieSession = kieContainer.newKieSession();
         kieSession.insert(req);
+        kieSession.insert(res);
         kieSession.fireAllRules();
         kieSession.dispose();
-        return res;
+
+        System.out.println(res.getBudget());
+        return null;
     }
 }

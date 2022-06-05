@@ -14,13 +14,14 @@ import javax.transaction.Transactional;
 public class RequestController {
     
     @Autowired
-    private com.example.EuroTraveler.service.RequestService RequestService;
+    private com.example.EuroTraveler.service.RequestService requestService;
 
     public RequestController() {
     }
 
     @PostMapping("/request")
-    public ResponseEntity<?> createRequest(@RequestBody Request Request) {
+    public ResponseEntity<?> createRequest(@RequestBody Request req) {
+        requestService.getDrools(req);
         return null;
     }
 

@@ -9,8 +9,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
-@Entity
-@Table(name = "request")
 public class Request implements Serializable {
 
     private static final long serialVersionUID = 1L;

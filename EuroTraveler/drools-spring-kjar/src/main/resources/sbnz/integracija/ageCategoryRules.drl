@@ -1,0 +1,75 @@
+package sbnz.integracija;
+
+import com.example.EuroTraveler.facts.Request
+import com.example.EuroTraveler.facts.Response
+import com.example.EuroTraveler.facts.Enums.AgeCategory
+
+// THEN treba da se promeni ?
+// Kada saberemo kolko ima svih, uzmemo sve to u jedno novo pravilo
+// I onda odaberemo kategoriju
+
+rule "Make sure Age Category is legit"
+    when
+        exists(Request())
+        forall(
+            Request()
+            Request(ageCategory.size() > 0)
+        )
+    then
+        System.out.println("Age Category legit");
+end
+
+rule "Age Category Count Babies"
+    when
+        $res: Response ( )
+        $req: Request ( $ageCategories : ageCategory)
+        Number(intValue >= 1) from accumulate(
+        Number(intValue <= 2, $value: 1) from $ageCategories,
+        sum($value))
+    then
+        modify($res){setAgeCategory(AgeCategory.FAMILY_WITH_BABY)}
+end
+
+rule "Age Category Count Kids"
+    when
+        $res: Response ( )
+        $req: Request ( $ageCategories : ageCategory)
+        Number(intValue >= 1) from accumulate(
+        Number(intValue > 2 && intValue <= 12, $value: 1) from $ageCategories,
+        sum($value))
+    then
+        modify($res){setAgeCategory(AgeCategory.FAMILY_WITH_BABY)}
+end
+
+rule "Age Category Count Teens"
+    when
+        $res: Response ( )
+        $req: Request ( $ageCategories : ageCategory)
+        Number(intValue >= 1) from accumulate(
+        Number(intValue > 12 && intValue <= 18, $value: 1) from $ageCategories,
+        sum($value))
+    then
+        modify($res){setAgeCategory(AgeCategory.FAMILY_WITH_BABY)}
+end
+
+rule "Age Category Count Adults"
+    when
+        $res: Response ( )
+        $req: Request ( $ageCategories : ageCategory)
+        Number(intValue >= 1) from accumulate(
+        Number(intValue > 18 && intValue <= 60, $value: 1) from $ageCategories,
+        sum($value))
+    then
+        modify($res){setAgeCategory(AgeCategory.FAMILY_WITH_BABY)}
+end
+
+rule "Age Category Count Elders"
+    when
+        $res: Response ( )
+        $req: Request ( $ageCategories : ageCategory)
+        Number(intValue >= 1) from accumulate(
+        Number(intValue > 60, $value: 1) from $ageCategories,
+        sum($value))
+    then
+        modify($res){setAgeCategory(AgeCategory.FAMILY_WITH_BABY)}
+end

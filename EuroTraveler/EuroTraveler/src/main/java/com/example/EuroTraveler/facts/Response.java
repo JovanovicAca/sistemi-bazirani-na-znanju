@@ -9,8 +9,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity
-@Table(name = "response")
 public class Response implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -164,5 +162,21 @@ public class Response implements Serializable {
 
     public void setCountryType(CountryType countryType) {
         this.countryType = countryType;
+    }
+
+    @Override
+    public String toString() {
+        return "Response{" +
+                "id=" + id +
+                ", transportType=" + transportType +
+                ", ageCategory=" + ageCategory +
+                ", budget=" + budget +
+                ", interests=" + interests +
+                ", distance=" + distance +
+                ", vacationType=" + vacationType +
+                ", countryType=" + countryType +
+                ", passengerNumber=" + passengerNumber +
+                ", accommodationType=" + accommodationType +
+                '}';
     }
 }

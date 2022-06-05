@@ -1,37 +1,53 @@
-package com.example.EuroTraveler;
-import com.example.EuroTraveler.facts.Enums.Budget;
-import com.example.EuroTraveler.facts.Query;
-import com.example.EuroTraveler.facts.DTO.ResultDTO;
+package sbnz.integracija;
 
-rule "Low Budget Trip"
+import com.example.EuroTraveler.facts.Request
+import com.example.EuroTraveler.facts.Response
+import com.example.EuroTraveler.facts.Enums.Budget
+
+rule "Budget LOW"
     when
-    	$result : ResultDTO ( budget == null)
-        $query: Query( budget/numberOfPassengers <= 300)
+        $req: Request ( budget/passengerNumber < 200, newStatus : Budget.LOW )
+        $res: Response( )
     then
-        modify($result){
-            setBudget(Budget.LOW)}
-            update($result)
-        System.out.println("*RULE FIRED* Trip budget set to LOW");
+        modify($res){setBudget(newStatus)}
 end
 
-rule "Medium Budget Trip"
+rule "Budget LOW_MEDIUM"
     when
-    	$result : ResultDTO ( budget == null)
-        $query: Query( budget/numberOfPassengers <= 800 && budget/numberOfPassengers > 300)
+        $req: Request ( budget/passengerNumber < 400 && budget/passengerNumber >= 200, newStatus : Budget.LOW_MEDIUM )
+        $res: Response( )
     then
-        modify($result){
-            setBudget(Budget.MEDIUM)}
-            update($result)
-        System.out.println("*RULE FIRED* Trip budget set to MEDIUM");
+        modify($res){setBudget(newStatus)}
 end
 
-rule "High Budget Trip"
+rule "Budget MEDIUM"
     when
-    	$result : ResultDTO ( budget == null)
-        $query: Query( budget/numberOfPassengers > 800)
+        $req: Request ( budget/passengerNumber < 600 && budget/passengerNumber >= 400, newStatus : Budget.MEDIUM )
+        $res: Response( )
     then
-        modify($result){
-            setBudget(Budget.HIGH)}
-            update($result)
-        System.out.println("*RULE FIRED* Trip budget set to HIGH");
+        modify($res){setBudget(newStatus)}
+end
+
+rule "Budget MEDIUM_HIGH"
+    when
+        $req: Request ( budget/passengerNumber < 800 && budget/passengerNumber >= 600, newStatus : Budget.MEDIUM_HIGH )
+        $res: Response( )
+    then
+        modify($res){setBudget(newStatus)}
+end
+
+rule "Budget HIGH"
+    when
+        $req: Request ( budget/passengerNumber < 1000 && budget/passengerNumber >= 800, newStatus : Budget.HIGH )
+        $res: Response( )
+    then
+        modify($res){setBudget(newStatus)}
+end
+
+rule "Budget LUXURY"
+    when
+        $req: Request ( budget/passengerNumber >= 1000, newStatus : Budget.LUXURY )
+        $res: Response( )
+    then
+        modify($res){setBudget(newStatus)}
 end
