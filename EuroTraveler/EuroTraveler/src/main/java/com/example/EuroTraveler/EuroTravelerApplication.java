@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieScanner;
 import org.kie.api.runtime.KieContainer;
+
+import java.time.LocalDate;
 import java.util.Arrays;
 
 @SpringBootApplication
@@ -24,6 +26,7 @@ public class EuroTravelerApplication {
 		for (String beanName : beanNames) {
 			sb.append(beanName + "\n");
 		}
+		System.out.println(LocalDate.now());
 		//log.info(sb.toString());
 	}
 

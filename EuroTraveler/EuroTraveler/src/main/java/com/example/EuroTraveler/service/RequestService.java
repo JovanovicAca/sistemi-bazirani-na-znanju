@@ -31,6 +31,6 @@ public class RequestService {
         kieSession.dispose();
 
         System.out.println(res.getBudget());
-        return null;
+        return res;
     }
 }

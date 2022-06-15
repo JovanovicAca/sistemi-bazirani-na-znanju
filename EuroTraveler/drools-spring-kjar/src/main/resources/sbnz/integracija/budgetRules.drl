@@ -6,7 +6,7 @@ import com.example.EuroTraveler.facts.Enums.Budget
 
 rule "Budget LOW"
     when
-        $req: Request ( budget/passengerNumber < 200, newStatus : Budget.LOW )
+        $req: Request ( budget/ageCategory.size() < 200, newStatus : Budget.LOW )
         $res: Response( )
     then
         modify($res){setBudget(newStatus)}
@@ -14,7 +14,7 @@ end
 
 rule "Budget LOW_MEDIUM"
     when
-        $req: Request ( budget/passengerNumber < 400 && budget/passengerNumber >= 200, newStatus : Budget.LOW_MEDIUM )
+        $req: Request ( budget/ageCategory.size() < 400 && budget/ageCategory.size() >= 200, newStatus : Budget.LOW_MEDIUM )
         $res: Response( )
     then
         modify($res){setBudget(newStatus)}
@@ -22,7 +22,7 @@ end
 
 rule "Budget MEDIUM"
     when
-        $req: Request ( budget/passengerNumber < 600 && budget/passengerNumber >= 400, newStatus : Budget.MEDIUM )
+        $req: Request ( budget/ageCategory.size() < 600 && budget/ageCategory.size() >= 400, newStatus : Budget.MEDIUM )
         $res: Response( )
     then
         modify($res){setBudget(newStatus)}
@@ -30,7 +30,7 @@ end
 
 rule "Budget MEDIUM_HIGH"
     when
-        $req: Request ( budget/passengerNumber < 800 && budget/passengerNumber >= 600, newStatus : Budget.MEDIUM_HIGH )
+        $req: Request ( budget/ageCategory.size() < 800 && budget/ageCategory.size() >= 600, newStatus : Budget.MEDIUM_HIGH )
         $res: Response( )
     then
         modify($res){setBudget(newStatus)}
@@ -38,7 +38,7 @@ end
 
 rule "Budget HIGH"
     when
-        $req: Request ( budget/passengerNumber < 1000 && budget/passengerNumber >= 800, newStatus : Budget.HIGH )
+        $req: Request ( budget/ageCategory.size() < 1000 && budget/ageCategory.size() >= 800, newStatus : Budget.HIGH )
         $res: Response( )
     then
         modify($res){setBudget(newStatus)}
@@ -46,7 +46,7 @@ end
 
 rule "Budget LUXURY"
     when
-        $req: Request ( budget/passengerNumber >= 1000, newStatus : Budget.LUXURY )
+        $req: Request ( budget/ageCategory.size() >= 1000, newStatus : Budget.LUXURY )
         $res: Response( )
     then
         modify($res){setBudget(newStatus)}
