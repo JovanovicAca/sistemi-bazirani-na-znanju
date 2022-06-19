@@ -9,6 +9,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@Entity
+@Table(name = "Response")
 public class Response implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -18,6 +20,9 @@ public class Response implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     @Column(name = "id")
     private Long id;
+
+    @Column(name = "name")
+    private String cityName;
 
     @Column(name = "transport_type")
     private TransportType transportType;
@@ -29,7 +34,7 @@ public class Response implements Serializable {
     private Budget budget;
 
     @Column(name = "interests")
-    private Set<Interests> interests = new HashSet<>();
+    private Interests interests;
 
     @Column(name = "distance")
     private Distance distance;
@@ -51,7 +56,7 @@ public class Response implements Serializable {
     }
 
     public Response(Long id, TransportType transportType, AgeCategory ageCategory,
-                    Budget budget, Set<Interests> interests, Distance distance, CountryType countryType,
+                    Budget budget, Interests interests, Distance distance, CountryType countryType,
                     VacationType vacationType, Integer passengerNumber, AccommodationType accommodationType) {
         this.id = id;
         this.transportType = transportType;
@@ -116,11 +121,11 @@ public class Response implements Serializable {
         this.budget = budget;
     }
 
-    public Set<Interests> getInterests() {
+    public Interests getInterests() {
         return interests;
     }
 
-    public void setInterests(Set<Interests> interests) {
+    public void setInterests(Interests interests) {
         this.interests = interests;
     }
 
@@ -150,6 +155,14 @@ public class Response implements Serializable {
 
     public AccommodationType getAccommodationType() {
         return accommodationType;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
     public void setAccommodationType(AccommodationType accommodationType) {

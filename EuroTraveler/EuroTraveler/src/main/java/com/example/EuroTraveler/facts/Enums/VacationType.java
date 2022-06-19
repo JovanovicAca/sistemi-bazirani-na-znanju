@@ -5,4 +5,5 @@ public enum VacationType {
     SUMMER_TYPE,
     AUTUMN,TYPE,
     WINTER_TYPE,
+    ALL_OF_THE_ABOVE
 }
