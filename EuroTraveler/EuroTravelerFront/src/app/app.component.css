@@ -1,0 +1,55 @@
+.blank{
+    width: 100%;
+    height: 10vh;
+    background-color: #fff;
+    display: flex;
+}
+.blank h3,
+.naslov{
+    margin-right: 40px;
+    padding-top: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-family: 'Anek Malayalam', sans-serif;
+    background-color: transparent;
+}
+.naslov{
+    margin-left: 37%;
+    margin-top: 30px;
+}
+.forma
+{
+    display: flex;
+    font-family: 'Anek Malayalam', sans-serif;
+    background-color: transparent;
+}
+.blank h3:hover{
+    background-color: rgba(0, 0, 0, 0.684);
+    border-radius: 15px;
+    color: white;
+}
+.blank h3:first-child{
+    margin-left: 30%;
+}
+.background{
+    width: 100%;
+    height: 30vh;
+}
+.background img {
+    width: 100%;
+    height: 300px;
+    object-fit: none;
+}
+.forma{
+    width: 70%;
+    margin-left: 15%;
+    margin-bottom: 50px;
+}
+.forma h3 {
+    margin-right: 20px;
+}
+.forma *{
+    margin-right: 20px;
+    height: 30px;
+    margin-top: 30px;
+}

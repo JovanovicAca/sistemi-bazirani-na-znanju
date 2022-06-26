@@ -21,6 +21,8 @@ public class Response implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    //Za DESTINACIJU
+
     @Column(name = "name")
     private String cityName;
 
@@ -30,29 +32,44 @@ public class Response implements Serializable {
     @Column(name = "age_category")
     private AgeCategory ageCategory;
 
-    @Column(name = "budget")
-    private Budget budget;
-
-    @Column(name = "interests")
-    private Interests interests;
-
-    @Column(name = "distance")
-    private Distance distance;
-
-    @Column(name = "vacation_type")
-    private VacationType vacationType;
-
-    @Column(name = "country_type")
-    private CountryType countryType;
-
-    @Column(name = "passenger_number")
-    private Integer passengerNumber;
+    @Column(name = "average_night_price")
+    private Double averageNightPrice;
 
     @Column(name = "accommodationType")
     private AccommodationType accommodationType;
 
+    @Column(name = "seasonal")
+    private Boolean seasonal;
+
+    @Column(name = "season")
+    private Season season;
+
+    //Za KVERI
+
+    private Integer daysStaying;
+
+    @Column(name = "climate")
+    private Climate climate;
+
+    @Column(name = "budget")
+    private Budget budget;
+
+    @Column(name = "distance")
+    private Distance distance;
+
+    @Column(name = "seasonFlag")
+    private Season seasonFlag;
+
     public Response() {
 
+    }
+
+    public Season getSeasonFlag() {
+        return seasonFlag;
+    }
+
+    public void setSeasonFlag(Season seasonFlag) {
+        this.seasonFlag = seasonFlag;
     }
 
     public Response(Long id, TransportType transportType, AgeCategory ageCategory,
@@ -62,31 +79,8 @@ public class Response implements Serializable {
         this.transportType = transportType;
         this.ageCategory = ageCategory;
         this.budget = budget;
-        this.interests = interests;
         this.distance = distance;
-        this.countryType = countryType;
-        this.vacationType = vacationType;
-        this.passengerNumber = passengerNumber;
         this.accommodationType = accommodationType;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Response)) return false;
-        Response request = (Response) o;
-        return Objects.equals(id, request.id) && Objects.equals(transportType, request.transportType)
-                && ageCategory == request.ageCategory && budget == request.budget
-                && countryType == request.countryType
-                && Objects.equals(interests, request.interests) && distance == request.distance
-                && vacationType == request.vacationType && Objects.equals(passengerNumber, request.passengerNumber)
-                && Objects.equals(accommodationType, request.accommodationType);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, transportType, ageCategory, budget, interests, distance,
-                            vacationType, passengerNumber, accommodationType,countryType);
     }
 
     public Long getId() {
@@ -97,12 +91,52 @@ public class Response implements Serializable {
         this.id = id;
     }
 
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public Integer getDaysStaying() {
+        return daysStaying;
+    }
+
+    public void setDaysStaying(Integer daysStaying) {
+        this.daysStaying = daysStaying;
+    }
+
     public TransportType getTransportType() {
         return transportType;
     }
 
+    public Boolean getSeasonal() {
+        return seasonal;
+    }
+
+    public void setSeasonal(Boolean seasonal) {
+        this.seasonal = seasonal;
+    }
+
+    public Season getSeason() {
+        return season;
+    }
+
+    public void setSeason(Season season) {
+        this.season = season;
+    }
+
     public void setTransportType(TransportType transportType) {
         this.transportType = transportType;
+    }
+
+    public Climate getClimate() {
+        return climate;
+    }
+
+    public void setClimate(Climate climate) {
+        this.climate = climate;
     }
 
     public AgeCategory getAgeCategory() {
@@ -113,20 +147,20 @@ public class Response implements Serializable {
         this.ageCategory = ageCategory;
     }
 
+    public Double getAverageNightPrice() {
+        return averageNightPrice;
+    }
+
+    public void setAverageNightPrice(Double averageNightPrice) {
+        this.averageNightPrice = averageNightPrice;
+    }
+
     public Budget getBudget() {
         return budget;
     }
 
     public void setBudget(Budget budget) {
         this.budget = budget;
-    }
-
-    public Interests getInterests() {
-        return interests;
-    }
-
-    public void setInterests(Interests interests) {
-        this.interests = interests;
     }
 
     public Distance getDistance() {
@@ -137,59 +171,11 @@ public class Response implements Serializable {
         this.distance = distance;
     }
 
-    public VacationType getVacationType() {
-        return vacationType;
-    }
-
-    public void setVacationType(VacationType vacationType) {
-        this.vacationType = vacationType;
-    }
-
-    public Integer getPassengerNumber() {
-        return passengerNumber;
-    }
-
-    public void setPassengerNumber(Integer passengerNumber) {
-        this.passengerNumber = passengerNumber;
-    }
-
     public AccommodationType getAccommodationType() {
         return accommodationType;
     }
 
-    public String getCityName() {
-        return cityName;
-    }
-
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
-    }
-
     public void setAccommodationType(AccommodationType accommodationType) {
         this.accommodationType = accommodationType;
-    }
-
-    public CountryType getCountryType() {
-        return countryType;
-    }
-
-    public void setCountryType(CountryType countryType) {
-        this.countryType = countryType;
-    }
-
-    @Override
-    public String toString() {
-        return "Response{" +
-                "id=" + id +
-                ", transportType=" + transportType +
-                ", ageCategory=" + ageCategory +
-                ", budget=" + budget +
-                ", interests=" + interests +
-                ", distance=" + distance +
-                ", vacationType=" + vacationType +
-                ", countryType=" + countryType +
-                ", passengerNumber=" + passengerNumber +
-                ", accommodationType=" + accommodationType +
-                '}';
     }
 }

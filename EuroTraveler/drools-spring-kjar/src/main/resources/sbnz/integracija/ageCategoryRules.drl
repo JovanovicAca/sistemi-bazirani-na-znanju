@@ -10,25 +10,9 @@ import com.example.EuroTraveler.facts.Enums.AccommodationType
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-// THEN treba da se promeni ?
-// Kada saberemo kolko ima svih, uzmemo sve to u jedno novo pravilo
-// I onda odaberemo kategoriju
-
 global Response response;
 
-
-rule "Make sure Age Category is legit"
-    when
-        exists(Request())
-        forall(
-            Request()
-            Request(ageCategory.size() > 0)
-        )
-    then
-        System.out.println("Age Category legit");
-end
-
-rule "Age Category Count Babies"
+rule "Age Category Count Babies"	
     when
         $res: Response ( )
         $req: Request ( $ageCategories : ageCategory)
@@ -40,7 +24,7 @@ rule "Age Category Count Babies"
 
 end
 
-rule "Age Category Count Kids"
+rule "Age Category Count Kids"	
     when
         $res: Response ( )
         $req: Request ( $ageCategories : ageCategory)
@@ -51,7 +35,8 @@ rule "Age Category Count Kids"
 
 end
 
-rule "Age Category Count Teens"
+rule "Age Category Count Teens"	
+
     when
         $res: Response ( )
         $req: Request ( $ageCategories : ageCategory)
@@ -61,7 +46,7 @@ rule "Age Category Count Teens"
         modify($res){setAgeCategory(AgeCategory.TEENAGERS)}
 end
 
-rule "Age Category Count Adults"
+rule "Age Category Count Adults"	
     when
         $res: Response ( )
         $req: Request ( $ageCategories : ageCategory)
@@ -71,7 +56,7 @@ rule "Age Category Count Adults"
         modify($res){setAgeCategory(AgeCategory.ADULTS)}
 end
 
-rule "Age Category Count Elders"
+rule "Age Category Count Elders"	
     when
         $res: Response ( )
         $req: Request ( $ageCategories : ageCategory)
@@ -81,7 +66,7 @@ rule "Age Category Count Elders"
         modify($res){setAgeCategory(AgeCategory.ELDERS)}
 end
 
-rule "Kratka destinacija autobusom za penzionere sa malim budzetom"
+rule "Kratka destinacija autobusom za penzionere sa malim budzetom"	
 	when
 		$req: Request($budzet: budget, $ageCategories: ageCategory, $dateFrom: dateFrom, $dateTo: dateTo)
 		$res: Response ()

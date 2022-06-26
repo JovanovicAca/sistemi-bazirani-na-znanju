@@ -22,6 +22,9 @@ public class Request implements Serializable {
     @Column(name = "transport_type")
     private TransportType transportType;
 
+    @Column(name = "traveling_hours")
+    private Integer travelingHours;
+
     @Column(name = "age_category")
     private List<Integer> ageCategory = new ArrayList<>();
 
@@ -39,9 +42,6 @@ public class Request implements Serializable {
 
     @Column(name = "dateTo")
     private LocalDate dateTo;
-
-    @Column(name = "passenger_number")
-    private Integer passengerNumber;
 
     @Column(name = "accommodationType")
     private AccommodationType accommodationType;
@@ -61,7 +61,6 @@ public class Request implements Serializable {
         this.distance = distance;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
-        this.passengerNumber = passengerNumber;
         this.accommodationType = accommodationType;
     }
 
@@ -74,14 +73,21 @@ public class Request implements Serializable {
                 && Objects.equals(ageCategory, request.ageCategory) && Objects.equals(budget, request.budget)
                 && Objects.equals(interests, request.interests) && Objects.equals(distance, request.distance)
                 && Objects.equals(dateFrom, request.dateFrom) && Objects.equals(dateTo, request.dateTo)
-                && Objects.equals(passengerNumber, request.passengerNumber)
                 && accommodationType == request.accommodationType;
+    }
+
+    public Integer getTravelingHours() {
+        return travelingHours;
+    }
+
+    public void setTravelingHours(Integer travelingHours) {
+        this.travelingHours = travelingHours;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, transportType, ageCategory, budget, interests, distance,
-                            dateFrom, dateTo, passengerNumber, accommodationType);
+                            dateFrom, dateTo, accommodationType);
     }
 
     public Long getId() {
@@ -148,13 +154,6 @@ public class Request implements Serializable {
         this.dateTo = dateTo;
     }
 
-    public Integer getPassengerNumber() {
-        return passengerNumber;
-    }
-
-    public void setPassengerNumber(Integer passengerNumber) {
-        this.passengerNumber = passengerNumber;
-    }
 
     public AccommodationType getAccommodationType() {
         return accommodationType;

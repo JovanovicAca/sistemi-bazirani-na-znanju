@@ -1,0 +1,89 @@
+package sbnz.integracija;
+
+import com.example.EuroTraveler.facts.Request;
+import com.example.EuroTraveler.facts.Response;
+import com.example.EuroTraveler.facts.Wrapper;
+import com.example.EuroTraveler.facts.Enums.*;
+import java.time.LocalDate;
+import java.time.YearMonth;
+
+rule "Set Distance based on Type and Hours of travel"
+	salience 100
+	when
+		$request: Request( $travelingHours : travelingHours , $transportType : transportType)
+		$response: Response ()
+	then
+		if ( $transportType.equals(TransportType.AIRPLANE))
+		{
+			if ( $travelingHours < 1 )
+			{
+				modify ( $response ) { setDistance(Distance.MEDIUM);}
+			}
+			if ( $travelingHours < 3 && $travelingHours >= 1 )
+			{
+				modify ( $response ) { setDistance(Distance.MEDIUM_LONG);}			
+			}
+			if ( $travelingHours < 5 && $travelingHours >= 3)
+			{
+				modify ( $response ) { setDistance(Distance.LONG);}
+			}
+			if ($travelingHours >= 5)
+			{
+				modify ( $response ) { setDistance(Distance.VERY_LONG);}
+			}
+		}
+		if ( $transportType.equals(TransportType.BUS))
+		{
+			if ( $travelingHours < 1 )
+			{
+				modify ( $response ) { setDistance(Distance.SHORT);}
+			}
+			if ( $travelingHours < 3 && $travelingHours >= 1 )
+			{
+				modify ( $response ) { setDistance(Distance.SHORT_MEDIUM);}			
+			}
+			if ( $travelingHours < 5 && $travelingHours >= 3 )
+			{
+				modify ( $response ) { setDistance(Distance.MEDIUM);}
+			}
+			if ( $travelingHours < 8 && $travelingHours >= 5 )
+			{
+				modify ( $response ) { setDistance(Distance.MEDIUM_LONG);}			
+			}
+			if ( $travelingHours < 12 && $travelingHours >= 8)
+			{
+				modify ( $response ) { setDistance(Distance.LONG);}
+			}
+			if ($travelingHours >= 15)
+			{
+				modify ( $response ) { setDistance(Distance.VERY_LONG);}
+			}
+		}
+		if ( $transportType.equals(TransportType.CAR))
+		{
+			if ( $travelingHours < 1 )
+			{
+				modify ( $response ) { setDistance(Distance.SHORT);}
+			}
+			if ( $travelingHours < 2 && $travelingHours >= 1 )
+			{
+				modify ( $response ) { setDistance(Distance.SHORT_MEDIUM);}			
+			}
+			if ( $travelingHours < 4 && $travelingHours >= 2 )
+			{
+				modify ( $response ) { setDistance(Distance.MEDIUM);}
+			}
+			if ( $travelingHours < 6 && $travelingHours >= 4 )
+			{
+				modify ( $response ) { setDistance(Distance.MEDIUM_LONG);}			
+			}
+			if ( $travelingHours < 8 && $travelingHours >= 6)
+			{
+				modify ( $response ) { setDistance(Distance.LONG);}
+			}
+			if ($travelingHours >= 10)
+			{
+				modify ( $response ) { setDistance(Distance.VERY_LONG);}
+			}
+		}
+end
