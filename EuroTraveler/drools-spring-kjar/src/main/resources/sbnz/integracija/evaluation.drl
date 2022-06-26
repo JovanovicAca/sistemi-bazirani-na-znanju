@@ -56,13 +56,13 @@ rule "Most popular destination"
 end
 
 
-rule "The most popular destination"
+/*rule "The most popular destination"
     salience (100*($response.getScore()+1))
     when
 		$response : Response ()
     then
-    	System.out.println("kita");
         if(responses.size() < 3){
             responses.add($response);
+            System.out.println("oce");
         }
-end;
+end*/

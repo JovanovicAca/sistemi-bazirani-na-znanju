@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -189,9 +190,11 @@ public class RequestService {
         kieSession.insert(wrapper);
         kieSession.fireAllRules();
 
-        for(Response re : x){
-            System.out.println(re.getScore());
+        responseList.sort( Comparator.comparing ( Response::getScore ).reversed() );
+        for(Response r : responseList){
+            System.out.println(r.getCityName() + " - Score : "+r.getScore());
         }
+
 
         kieSession.dispose();
 

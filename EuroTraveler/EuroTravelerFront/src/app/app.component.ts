@@ -44,12 +44,11 @@ submit(){
     ageCategory : finnalList,
     dateFrom : dateFromNew,
     dateTo : dateToNew,
-    interests : []
+    interests : ["SKIJANJE"]
   };
 
   this.nbtService.search(request).subscribe({
     next: (result) => {
-      alert("KITA")
     },
     error: (error) => {
       console.log(error)
