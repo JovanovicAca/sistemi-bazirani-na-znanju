@@ -53,3 +53,29 @@
     height: 30px;
     margin-top: 30px;
 }
+#btn *{
+    margin-top: 10px;
+}
+#putnik{
+    width: 120px;
+}
+#buttonPretraga{
+    margin-left: 17%;
+    height: 50px;
+    width: 250px;
+    border: 0;
+    background-color: rgba(31, 123, 189, 0.787);
+    color: white;
+    font-size: 20px;
+    border-radius: 15px;
+}
+#buttonPretraga:hover{
+    color:rgba(31, 123, 189, 0.787) ;
+    border: 1px solid rgba(31, 123, 189, 0.787);
+    background-color: white;
+}
+#radio{
+    margin-right: 10px;
+    margin-left: 40px;
+    margin-top: -5px;
+}

@@ -1,0 +1,68 @@
+package sbnz.integracija;
+
+import com.example.EuroTraveler.facts.Request
+import com.example.EuroTraveler.facts.Response
+import com.example.EuroTraveler.facts.Enums.AgeCategory
+import com.example.EuroTraveler.facts.Enums.Distance
+import com.example.EuroTraveler.facts.Enums.TransportType
+import com.example.EuroTraveler.facts.Enums.AccommodationType
+import java.util.List;
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
+global List<Response> responses;
+
+rule "Most popular destination"
+	salience 50
+	when
+		$request : Request ( $transportType : getTransportType() )
+		$wrapper : Wrapper ( $list : getList() )
+		$response : Response ( $budget : getBudget(), $distance : getDistance() , $accomodationType : getAccommodationType())
+		$value: Number() from accumulate
+        (
+        	Response ( $res : this ) from $list,
+        	init
+        	(
+        		int score = 0;
+        	),
+            action
+            (	
+            	$res.setScore(0);
+				if ( $res.getBudget().equals($budget))
+				{
+					$res.setScore($res.getScore() + 5);
+				}
+				if ( $res.getAccommodationType().equals($accomodationType))
+				{
+					$res.setScore($res.getScore() + 5);
+				}
+				if ( $res.getTransportType().equals($transportType))
+				{
+					$res.setScore($res.getScore() + 5);
+				}
+				if ( $res.getDistance().equals($distance))
+				{
+					$res.setScore($res.getScore() + 5);
+				}
+            ),
+            result
+            (
+            	score
+            )
+        )
+	then
+		int count = $value.intValue();
+end
+
+
+rule "The most popular destination"
+    salience (100*($response.getScore()+1))
+    when
+		$response : Response ()
+    then
+    	System.out.println("kita");
+        if(responses.size() < 3){
+            responses.add($response);
+        }
+end;

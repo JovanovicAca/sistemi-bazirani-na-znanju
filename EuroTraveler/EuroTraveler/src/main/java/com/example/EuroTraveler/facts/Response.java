@@ -60,6 +60,9 @@ public class Response implements Serializable {
     @Column(name = "seasonFlag")
     private Season seasonFlag;
 
+    @Column(name = "score")
+    private Integer score;
+
     public Response() {
 
     }
@@ -125,6 +128,14 @@ public class Response implements Serializable {
 
     public void setSeason(Season season) {
         this.season = season;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
     }
 
     public void setTransportType(TransportType transportType) {

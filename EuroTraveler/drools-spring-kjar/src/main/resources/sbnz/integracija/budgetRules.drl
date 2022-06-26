@@ -175,3 +175,34 @@ rule "Budget LUXURY"
     then
         modify($res){setBudget(newStatus)}
 end
+
+rule "Hostel or Hotel"
+	salience 60
+	when
+		$res : Response ($budget : getBudget())
+	then
+		if($budget.equals(Budget.LOW))
+		{
+			modify($res){setAccommodationType(AccommodationType.HOSTEL);}
+		}
+		if($budget.equals(Budget.LOW_MEDIUM))
+		{
+			modify($res){setAccommodationType(AccommodationType.HOSTEL);}
+		}
+		if($budget.equals(Budget.MEDIUM))
+		{
+			modify($res){setAccommodationType(AccommodationType.HOSTEL);}
+		}
+		if($budget.equals(Budget.MEDIUM_HIGH))
+		{
+			modify($res){setAccommodationType(AccommodationType.HOTEL);}
+		}
+		if($budget.equals(Budget.HIGH))
+		{
+			modify($res){setAccommodationType(AccommodationType.HOTEL);}
+		}
+		if($budget.equals(Budget.LUXURY))
+		{
+			modify($res){setAccommodationType(AccommodationType.HOTEL);}
+		}
+end

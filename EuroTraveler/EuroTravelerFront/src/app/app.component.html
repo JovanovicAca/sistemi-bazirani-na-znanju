@@ -28,29 +28,32 @@
   <div class="forma">
     <h3>Odaberite tip prevoza </h3>
     <select id="transport-type">
-      <option value="airplane">Airplane</option>
-      <option value="car">Car</option>
-      <option value="bus">Bus</option>
+      <option value="AIRPLANE">Avion</option>
+      <option value="CAR">Automobil</option>
+      <option value="BUS">Autobus</option>
     </select>
     <h3>Unesite budzet</h3>
-    <input type="text" name="" id="">
+    <input type="text" name="" id="budget">
     <h3>Do koliko sati voznje</h3>
-    <input type="text" name="" id="">
+    <input type="text" name="" id="traveling-hours">
     <h3>Datum od</h3>
     <input type="date" id="od" >
   </div>
   <div class="forma">
     <h3>Datum do</h3>
     <input type="date" id="do" >
-    <h3>Tip smestaja</h3>
-    <input type="date" id="do" >
     <h3>Interesi</h3>
-    <input type="radio">Obilasci
-    <input type="radio">Kulturne znamenitosti
-    <input type="radio">Plaza
-    <input type="radio">More
-    <input type="radio">Planine
-    <input type="radio">Skijanje
+    <input type="radio" name="radiobtn" id="radio">Obilasci
+    <input type="radio" name="radiobtn" id="radio">Kulturne znamenitosti
+    <input type="radio" name="radiobtn" id="radio">Plaza
+    <input type="radio" name="radiobtn" id="radio">More
+    <input type="radio" name="radiobtn" id="radio">Planine
+    <input type="radio" name="radiobtn" id="radio">Skijanje
+  </div>
+  <div class="forma">
+    <h3>Godine putnika</h3>
+    <input type="text" id="putnik" >
+    <button id="buttonPretraga" (click)="submit()"> Pretrazi Destinacije</button>
   </div>
 </body>
 </html>
