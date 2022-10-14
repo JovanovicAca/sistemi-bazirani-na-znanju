@@ -1,0 +1,75 @@
+package sbnz.integracija;
+
+import com.example.EuroTraveler.facts.Request;
+import com.example.EuroTraveler.facts.Response;
+import com.example.EuroTraveler.facts.Wrapper;
+import com.example.EuroTraveler.facts.Enums.*;
+import java.time.LocalDate;
+import java.time.YearMonth;
+
+rule "Applying which seasson user prefers"
+	salience 100
+	when
+		$request: Request( $interests: interests )
+		$response : Response ()
+		$value: Number() from accumulate
+		(
+			Interests ( $int : this ) from $interests,
+			init
+			(
+				int count = 0;
+			),
+			action
+			(
+				if($int.equals(Interests.SKIJANJE)){
+					count += 1;
+				}
+				if($int.equals(Interests.MORE)){
+					count -= 1;
+				}
+				if($int.equals(Interests.PLANINE)){
+					count += 1;
+				}
+				if($int.equals(Interests.PLAZA)){
+					count -= 1;
+				}
+			),
+			result
+			(
+				count
+			)
+		)
+	then
+		int count = $value.intValue();
+		if ( count > 0 ){
+			modify($response) {setClimate(Climate.COLD); }
+		}
+		if ( count < 0 ){
+			modify($response) {setClimate(Climate.HOT); }
+		}		
+		if ( count == 0 ){
+			modify($response) {setClimate(Climate.INTERMEDIATE); }
+		}
+end
+
+rule "Destination preferences"
+	salience 90
+	when
+		$request: Request( $dateFrom : dateFrom , $dateTo : dateTo )
+		$response : Response ( $climate : climate )
+	then
+		if ( $dateFrom.getMonth().getValue() == 11 || $dateFrom.getMonth().getValue() == 12 || $dateFrom.getMonth().getValue() == 1 || $dateFrom.getMonth().getValue() == 2 )
+		{
+			if ( $climate.equals(Climate.HOT))
+			{
+				modify ( $response ) { setSeasonFlag(Season.HOT); }
+			}
+		}
+		if ( $dateFrom.getMonth().getValue() == 5 || $dateFrom.getMonth().getValue() == 6 || $dateFrom.getMonth().getValue() == 7 || $dateFrom.getMonth().getValue() == 8 )
+		{
+			if ( $climate.equals(Climate.COLD))
+			{
+				modify ( $response ) { setSeasonFlag(Season.COLD); }
+			}
+		}		
+end

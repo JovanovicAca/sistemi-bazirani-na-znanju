@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Malayalam:wght@200&display=swap" rel="stylesheet"> 
+  <link rel="stylesheet" href="app.component.css">
+</head>
+<body>
+  <div class="body">
+    <div class="blank">
+      <h3>Destinacije</h3>
+      <h3>Vrste putovanja</h3>
+      <h3>Kalendar</h3>
+      <h3>O nama</h3>
+      <h3>Kontakt</h3>
+    </div>
+    <div class="background">
+      <img src="../assets/profilna.jpg" alt="">
+    </div>
+  </div>
+  <div class="naslov">
+    <h1>Odaberite svoju idealnu destinaciju</h1>
+  </div>
+  <div class="forma">
+    <h3>Odaberite tip prevoza </h3>
+    <select id="transport-type">
+      <option value="AIRPLANE">Avion</option>
+      <option value="CAR">Automobil</option>
+      <option value="BUS">Autobus</option>
+    </select>
+    <h3>Unesite budzet</h3>
+    <input type="text" name="" id="budget">
+    <h3>Do koliko sati voznje</h3>
+    <input type="text" name="" id="traveling-hours">
+    <h3>Datum od</h3>
+    <input type="date" id="od" >
+  </div>
+  <div class="forma">
+    <h3>Datum do</h3>
+    <input type="date" id="do" >
+    <h3>Interesi</h3>
+    <input type="radio" name="radiobtn" id="radio">Obilasci
+    <input type="radio" name="radiobtn" id="radio">Kulturne znamenitosti
+    <input type="radio" name="radiobtn" id="radio">Plaza
+    <input type="radio" name="radiobtn" id="radio">More
+    <input type="radio" name="radiobtn" id="radio">Planine
+    <input type="radio" name="radiobtn" id="radio">Skijanje
+  </div>
+  <div class="forma">
+    <h3>Godine putnika</h3>
+    <input type="text" id="putnik" >
+    <button id="buttonPretraga" (click)="submit()"> Pretrazi Destinacije</button>
+  </div>
+</body>
+</html>

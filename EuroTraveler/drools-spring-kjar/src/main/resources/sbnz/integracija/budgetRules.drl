@@ -1,0 +1,208 @@
+package sbnz.integracija;
+
+import com.example.EuroTraveler.facts.Request;
+import com.example.EuroTraveler.facts.Response;
+import com.example.EuroTraveler.facts.Wrapper;
+import com.example.EuroTraveler.facts.Enums.*;
+import java.time.LocalDate;
+import java.time.YearMonth;
+
+rule "Calculating number of staying days"
+	salience 100
+	when
+		$request: Request( $dateFrom : dateFrom, $dateTo : dateTo)
+		$response : Response ( daysStaying : 0 )
+	then	
+		int dateFromMonth = $dateFrom.getMonth().getValue();
+		int dateFromDaysInMonth = 0;
+		int monthDifference = dateFromMonth - $dateTo.getMonth().getValue();
+		int numberOfDays = 0;
+		
+		if (dateFromMonth == 4 || dateFromMonth == 6 || dateFromMonth == 9 || dateFromMonth == 11) 
+		{
+		   	dateFromDaysInMonth = 30;
+		} 
+		else if (dateFromMonth == 2) 
+		{
+	    	dateFromDaysInMonth = 28;
+    	}
+		else 
+		{ 
+		    dateFromDaysInMonth = 31;
+		}
+		if ( monthDifference == 0 )
+		{
+			numberOfDays = $dateTo.getDayOfMonth() - $dateFrom.getDayOfMonth();
+		}
+		else if ( monthDifference == 1 )
+		{
+			numberOfDays = ( dateFromDaysInMonth - $dateFrom.getDayOfMonth() ) + $dateTo.getDayOfMonth();
+		}
+		else
+		{
+			numberOfDays = ( dateFromDaysInMonth - $dateFrom.getDayOfMonth() ) + monthDifference*30 + $dateTo.getDayOfMonth();
+		}
+		modify($response) {setDaysStaying(numberOfDays)}
+end
+
+rule "Give discount for longer staying duration"
+	salience 90
+	when
+		$response : Response ( $daysStaying : daysStaying )
+		$destinations : Wrapper ( $list : getList() )
+		$value: Number() from accumulate
+        (
+        	Response ( $res : this ) from $list,
+        	init
+        	(
+        		int count = 0;
+        	),
+            action
+            (	
+				if ( $daysStaying >= 10 )
+				{
+					$res.setAverageNightPrice($res.getAverageNightPrice() * 0.9);
+				}
+				else if ( $daysStaying >= 20 )
+				{
+					$res.setAverageNightPrice($res.getAverageNightPrice() * 0.8);
+				}
+            ),
+            result
+            (
+            	count
+            )
+        )
+	then
+		System.out.println("");
+end
+
+rule "Calculate expenses"
+	salience 80
+	no-loop
+	when
+		$request: Request( $travelingHours : travelingHours , $transportType : transportType , $ageCategory : ageCategory , $budget : budget)
+		$response : Response ( )
+		$value: Number() from accumulate
+        (
+        	Integer ( $age : this ) from $ageCategory,
+        	init
+        	(
+        		int count = 0;
+        	),
+            action
+            (	
+				if ( $age >= 2 )
+				{
+					count += 1;
+				}
+            ),
+            result
+            (
+            	count
+            )
+        )
+	then
+		int passengers = $value.intValue();
+		int pricePerTravelType = 0;
+		if ( $transportType.equals(TransportType.AIRPLANE))
+		{
+			pricePerTravelType = 6;
+		}
+		if ( $transportType.equals(TransportType.BUS))
+		{
+			pricePerTravelType = 2;
+		}
+		if ( $transportType.equals(TransportType.CAR))
+		{
+			pricePerTravelType = 4;
+		}
+		double totalExpenses = passengers * pricePerTravelType * $travelingHours;
+		double newBudget = $budget - totalExpenses;
+		modify($request) { setBudget(newBudget);}
+end
+
+rule "Budget LOW"
+	salience 70
+    when
+        $req: Request ( budget/ageCategory.size() < 200, newStatus : Budget.LOW )
+        $res: Response( )
+    then
+        modify($res){setBudget(newStatus)}
+end
+
+rule "Budget LOW_MEDIUM"
+	salience 70
+    when
+        $req: Request ( budget/ageCategory.size() < 400 && budget/ageCategory.size() >= 200, newStatus : Budget.LOW_MEDIUM )
+        $res: Response( )
+    then
+        modify($res){setBudget(newStatus)}
+end
+
+rule "Budget MEDIUM"
+	salience 70
+    when
+        $req: Request ( budget/ageCategory.size() < 600 && budget/ageCategory.size() >= 400, newStatus : Budget.MEDIUM )
+        $res: Response( )
+    then
+        modify($res){setBudget(newStatus)}
+end
+
+rule "Budget MEDIUM_HIGH"
+	salience 70
+    when
+        $req: Request ( budget/ageCategory.size() < 800 && budget/ageCategory.size() >= 600, newStatus : Budget.MEDIUM_HIGH )
+        $res: Response( )
+    then
+        modify($res){setBudget(newStatus)}
+end
+
+rule "Budget HIGH"
+	salience 70
+    when
+        $req: Request ( budget/ageCategory.size() < 1000 && budget/ageCategory.size() >= 800, newStatus : Budget.HIGH )
+        $res: Response( )
+    then
+        modify($res){setBudget(newStatus)}
+end
+
+rule "Budget LUXURY"
+	salience 70
+    when
+        $req: Request ( budget/ageCategory.size() >= 1000, newStatus : Budget.LUXURY )
+        $res: Response( )
+    then
+        modify($res){setBudget(newStatus)}
+end
+
+rule "Hostel or Hotel"
+	salience 60
+	when
+		$res : Response ($budget : getBudget())
+	then
+		if($budget.equals(Budget.LOW))
+		{
+			modify($res){setAccommodationType(AccommodationType.HOSTEL);}
+		}
+		if($budget.equals(Budget.LOW_MEDIUM))
+		{
+			modify($res){setAccommodationType(AccommodationType.HOSTEL);}
+		}
+		if($budget.equals(Budget.MEDIUM))
+		{
+			modify($res){setAccommodationType(AccommodationType.HOSTEL);}
+		}
+		if($budget.equals(Budget.MEDIUM_HIGH))
+		{
+			modify($res){setAccommodationType(AccommodationType.HOTEL);}
+		}
+		if($budget.equals(Budget.HIGH))
+		{
+			modify($res){setAccommodationType(AccommodationType.HOTEL);}
+		}
+		if($budget.equals(Budget.LUXURY))
+		{
+			modify($res){setAccommodationType(AccommodationType.HOTEL);}
+		}
+end
